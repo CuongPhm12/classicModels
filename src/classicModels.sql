@@ -26,3 +26,39 @@ begin
 end;
 
 call fillAllCustomer();
+
+create procedure getCusById
+(IN  cusNum int(11))
+begin
+    select * from customers where customerNumber = cusNum;
+end;
+
+call getCusById(175);
+
+create procedure GetCustomersCountByCity(
+in in_city varchar(50),
+out total int
+)
+begin
+select count(customerNumber)
+into total
+from customers
+where city = in_city;
+end;
+
+call GetCustomersCountByCity('Lyon', @total);
+select @total;
+
+create procedure SetCounter(
+inout counter int ,
+in inc int
+)
+begin
+    set counter = counter + inc;
+end;
+
+set @counter =1;
+call SetCounter(@counter,1);
+call SetCounter(@counter,3);
+call SetCounter(@counter,5);
+select @counter;
